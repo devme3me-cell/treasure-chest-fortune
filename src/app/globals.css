@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 0 0% 98%;
+    --card: 222 47% 11%;
+    --card-foreground: 0 0% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 45 93% 58%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 45 93% 58%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 45 93% 58%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: #d3af4c;
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #f4e4a7 0%, #d3af4c 50%, #b8963d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gold {
+    background-color: #d3af4c;
+  }
+
+  .border-gold {
+    border-color: #d3af4c;
+  }
+
+  .prize-card {
+    background: rgba(45, 55, 72, 0.4);
+    border: 1px solid rgba(211, 175, 76, 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .prize-card:hover {
+    border-color: rgba(211, 175, 76, 0.5);
+    background: rgba(45, 55, 72, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .platform-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .platform-icon:hover {
+    transform: scale(1.05) translateY(-4px);
+    filter: brightness(1.1);
+  }
+
+  .platform-icon:active {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sparkle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #f4e4a7 0%, transparent 70%);
+  animation: sparkle 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.font-display {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 600;
+}
+
+/* Treasure Chest Animations */
+.treasure-chest-container {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  position: relative;
+}
+
+.treasure-chest-container:hover:not(.open-chest) {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 20px rgba(211, 175, 76, 0.3));
+}
+
+.treasure-chest-container.open-chest {
+  cursor: default;
+  filter: drop-shadow(0 0 30px rgba(211, 175, 76, 0.5)) brightness(1.1);
+}
+
+.treasure-chest-container svg {
+  display: block;
+  margin: 0 auto;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+}
+
+.treasure-chest-container svg #chest {
+  transform-style: preserve-3d;
+}
+
+/* Golden glow when opening */
+@keyframes goldenGlow {
+  0% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(244, 228, 167, 0.8)) drop-shadow(0 0 80px rgba(211, 175, 76, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 30px rgba(244, 228, 167, 0.5)) drop-shadow(0 0 60px rgba(211, 175, 76, 0.4));
+  }
+}
+
+.treasure-chest-container.open-chest svg {
+  animation: goldenGlow 1s ease-out forwards;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px) rotate(-2deg); }
+  20%, 40%, 60%, 80% { transform: translateX(8px) rotate(2deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.shake-chest {
+  animation: shake 0.5s ease-in-out;
+}
+
+.treasure-chest-container.shaking {
+  animation: shake 0.4s ease-in-out, pulse 0.4s ease-in-out;
+}
+
+.open-chest #chest-top {
+  animation: openChest 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.open-chest #chest-lock {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+@keyframes openChest {
+  0% {
+    transform: rotateX(0deg) translateY(0);
+  }
+  30% {
+    transform: rotateX(-10deg) translateY(-3px);
+  }
+  70% {
+    transform: rotateX(-125deg) translateY(-15px);
+  }
+  100% {
+    transform: rotateX(-120deg) translateY(-12px);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
